@@ -8,6 +8,12 @@ The hardware design for a keyboard is fairly straightforward. A lot of credit he
 
 Even though this is a 6-key keypad (which means each switch could be directly connected to it's own pin), I thought a keyboard matrix circuit would be more fun to implement. The premise here is pretty straightforward: since there aren't enough pins on microcontrollers to directly connect each switch to a key, you have to get a bit creative and arrange switches in a grid-like formation. Then, each switch will be connected to a specific grid pin and to a specific row pin. Now, say you have current flowing through a specific column, if any of the keys connected in that column are pressed, you'll be able to figure that out by simplying checking the corresponding row pins for any input. There's a few things to be considerate of however -- primarily [ghosting](https://www.dribin.org/dave/keyboard/one_html/).
 
+## Soldering
+
+I've never soldered before, so I thought this would be a great opportunity to learn. There's a few components that I thought would be near impossible for me to solder as a beginner (e.g., the USB Micro-B connector, the ATMEGA32U4 microcontroller, and whatever other SMD  components), so I opted for these to be assembled by the PCB manufacturer (in my case, JLCPCB). The switches however, being through-hole, felt a little bit more in my ballpark. 
+
+For soldering equipment, I didn't have anything on hand so I ended up grabbing myself a [PINECIL](https://pine64.com/product/pinecil-smart-mini-portable-soldering-iron/). It seems to be pretty highly recommended and I can understand why; it felt very easy to use. Maybe in the future if I do more soldering I might pick up something more heavy-duty, like a hot air rework station.
+
 ## Firmware
 
 The firmware I've written for this uses [LUFA](https://github.com/abcminiuser/lufa) to communicate via USB. I'm new to this framework, so I've built upon the Keyboard demo that's generously provided with LUFA. The relevant keypad code (e.g. what actually sets up our pins, scans through the matrix, handles debouncing, etc.) can be found in `macropad_firmware/macropad_firmware/Keyboard.c`. I do eventually want to move this out of a demo and into something built up from scratch (albeit while still using LUFA), but for now this has worked very well for a first revision.
